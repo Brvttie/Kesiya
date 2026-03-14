@@ -3,18 +3,190 @@
     "words": [
       {
         "id": 1,
-        "meaning": "Hello",
-        "roman": "kosa",
-        "script": "कोस",
-        "ipa": "ko.sa",
-        "audio": "https://archive.org/download/example/kosa.mp3",
-        "categories": ["Basic Convo", "Social"]
+        "meaning": "I, Me",
+        "roman": "Ke",
+        "script": "лᤕ",
+        "ipa": "kɛ",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 2,
+        "meaning": "My, Mine",
+        "roman": "Kes",
+        "script": "лᤕꙅ",
+        "ipa": "kɛs",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 3,
+        "meaning": "You, You're",
+        "roman": "Na",
+        "script": "ꪕᨡ",
+        "ipa": "nɑ",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 4,
+        "meaning": "Your",
+        "roman": "Nas",
+        "script": "ꪕᨡ",
+        "ipa": "nɑs",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 5,
+        "meaning": "We, us, our",
+        "roman": "mǎu",
+        "script": "𑆅",
+        "ipa": "",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 6,
+        "meaning": "They, their",
+        "roman": "ko",
+        "script": "лရ",
+        "ipa": "",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 7,
+        "meaning": "She, her",
+        "roman": "sa",
+        "script": "ꙅ",
+        "ipa": "sɑ",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 8,
+        "meaning": "He, him",
+        "roman": "so",
+        "script": "ꙅရ",
+        "ipa": "sɔ",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 9,
+        "meaning": "and",
+        "roman": "mó",
+        "script": "𑆅ရ",
+        "ipa": "mɔj",
+        "audio": "",
+        "categories": ["Grammar"]
+      },
+      {
+        "id": 10,
+        "meaning": "or",
+        "roman": "mo",
+        "script": "𑆅ရ",
+        "ipa": "mɔ",
+        "audio": "",
+        "categories": ["Grammar"]
       }
     ],
     "alphabet": []
   },
   "kokoyo": {
-    "words": [],
+    "words": [
+      {
+        "id": 1,
+        "meaning": "I, Me",
+        "roman": "sa",
+        "script": "ꙅᨡ",
+        "ipa": "sɑ",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 2,
+        "meaning": "My, Mine",
+        "roman": "saie",
+        "script": "ꙅᰁᤕ",
+        "ipa": "saɪ.ɛ",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 3,
+        "meaning": "You, You're",
+        "roman": "ka",
+        "script": "лᨡ",
+        "ipa": "kɑ",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 4,
+        "meaning": "Your",
+        "roman": "kaie",
+        "script": "лᨡᰁᤕ",
+        "ipa": "kaɪ.ɛ",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 5,
+        "meaning": "We, us, our",
+        "roman": "ho",
+        "script": "ᤘရ",
+        "ipa": "hɔ",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 6,
+        "meaning": "They, their",
+        "roman": "es",
+        "script": "ᤕꙅ",
+        "ipa": "ɛs",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 7,
+        "meaning": "She, her",
+        "roman": "te",
+        "script": "ƭᤕ",
+        "ipa": "tɛ",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 8,
+        "meaning": "He, him",
+        "roman": "to",
+        "script": "ƭရ",
+        "ipa": "tɔ",
+        "audio": "",
+        "categories": ["Pronouns"]
+      },
+      {
+        "id": 9,
+        "meaning": "Or",
+        "roman": "de",
+        "script": "ᤌᤕ",
+        "ipa": "dɛ",
+        "audio": "",
+        "categories": ["Grammar"]
+      },
+      {
+        "id": 10,
+        "meaning": "and",
+        "roman": "da",
+        "script": "ᤌ",
+        "ipa": "dɑ",
+        "audio": "",
+        "categories": ["Grammar"]
+      }
+    ],
     "alphabet": []
   }
 }
