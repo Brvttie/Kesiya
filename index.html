@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conlang Showcase: Kesiya & Kokoyo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        :root { --font-kesiya: 'Inter', sans-serif; --font-kokoyo: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; }
+        .theme-kesiya { --primary: #EF959D; --secondary: #FCDDBC; --accent: #FF8E8E; --bg: #FFF0F5; --text: #5D4037; --card-bg: #FFFFFF; }
+        .theme-kokoyo { --primary: #69C9A9; --secondary: #96DBA5; --accent: #2C7A68; --bg: #F0FDF4; --text: #064E3B; --card-bg: #FFFFFF; }
+        .custom-font-kesiya { font-family: var(--font-kesiya), sans-serif; }
+        .custom-font-kokoyo { font-family: var(--font-kokoyo), sans-serif; }
+        .loading-spinner { border: 3px solid rgba(0,0,0,0.1); border-radius: 50%; border-top: 3px solid var(--primary); width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .modal-overlay { background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
+    </style>
+</head>
+<body class="theme-kesiya bg-[var(--bg)] text-[var(--text)] min-h-screen flex flex-col">
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-[var(--bg)]/80 border-b border-[var(--primary)]/20 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex space-x-2 bg-[var(--secondary)]/30 p-1 rounded-full">
+                    <button onclick="switchLanguage('kesiya')" id="btn-kesiya" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-[var(--primary)] text-white">Kesiya</button>
+                    <button onclick="switchLanguage('kokoyo')" id="btn-kokoyo" class="px-4 py-1.5 rounded-full text-sm font-semibold text-gray-500">Kokoyo</button>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="https://github.com/YOUR_USERNAME/YOUR_REPO/edit/main/data.json" target="_blank" class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[var(--primary)]/10 text-sm font-bold">
+                        <i class="fa-solid fa-pen"></i> <span>Add Words (Admin)</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-[var(--accent)] mb-2" id="page-title">Kesiya Dictionary</h1>
+                <p class="opacity-80">Explore the vocabulary and structure of our constructed language.</p>
+            </div>
+            <div class="flex space-x-1 bg-[var(--card-bg)] p-1 rounded-lg shadow-sm">
+                <button onclick="switchTab('dictionary')" id="tab-dictionary" class="px-4 py-2 rounded-md text-sm font-medium bg-[var(--primary)] text-white">Dictionary</button>
+                <button onclick="switchTab('alphabet')" id="tab-alphabet" class="px-4 py-2 rounded-md text-sm font-medium text-[var(--text)]">Alphabet Chart</button>
+            </div>
+        </div>
+
+        <div id="loading-state" class="flex justify-center items-center py-20">
+            <div class="loading-spinner"></div>
+            <span class="ml-4 opacity-70">Loading data...</span>
+        </div>
+
+        <div id="view-dictionary" class="space-y-6 hidden">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-[var(--card-bg)] p-4 rounded-xl shadow-sm">
+                <div class="relative w-full md:w-96">
+                    <input type="text" id="search-input" placeholder="Search meaning or word..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-[var(--primary)]/30 bg-[var(--bg)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]">
+                    <i class="fa-solid fa-search absolute left-3 top-3 text-[var(--primary)]/50"></i>
+                </div>
+                <div class="flex gap-2">
+                    <select id="category-filter" class="px-3 py-2 rounded-lg border border-[var(--primary)]/30 bg-[var(--bg)] text-sm"><option value="all">All Categories</option></select>
+                </div>
+            </div>
+            <div id="word-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div class="flex justify-center items-center gap-4 mt-8">
+                <button onclick="changePage(-1)" class="p-2 rounded-full hover:bg-[var(--primary)]/20" id="prev-page"><i class="fa-solid fa-chevron-left"></i></button>
+                <span class="font-mono text-sm" id="page-indicator">Page 1</span>
+                <button onclick="changePage(1)" class="p-2 rounded-full hover:bg-[var(--primary)]/20" id="next-page"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div id="view-alphabet" class="hidden space-y-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Phonetic Chart</h2>
+            </div>
+            <div class="bg-[var(--card-bg)] rounded-xl shadow-sm overflow-hidden">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="bg-[var(--secondary)]/20 text-[var(--accent)]">
+                            <th class="p-4 font-bold">Character</th>
+                            <th class="p-4 font-bold">IPA</th>
+                            <th class="p-4 font-bold">Sound Description</th>
+                            <th class="p-4 font-bold">Example Word</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alphabet-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let appState = {
+            currentLang: 'kesiya',
+            currentTab: 'dictionary',
+            currentPage: 1,
+            itemsPerPage: 100,
+            data: null
+        };
+
+        const CATEGORIES = ["Pronouns", "Social", "Grammar", "Nature", "Time", "Number", "Name", "Money", "Verb", "Descriptor", "Color", "Objects", "Animals", "Basic Convo", "Slang", "Food", "Anatomy", "Emotion", "Technology", "Places", "Direction", "Garments", "Spiritual"];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            initCategories();
+            document.getElementById('search-input').addEventListener('input', () => { appState.currentPage = 1; renderDictionary(); });
+            document.getElementById('category-filter').addEventListener('change', () => { appState.currentPage = 1; renderDictionary(); });
+        });
+
+        async function loadData() {
+            try {
+                const response = await fetch('data.json');
+                const json = await response.json();
+                appState.data = json;
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('view-dictionary').classList.remove('hidden');
+                render();
+            } catch (error) {
+                document.getElementById('loading-state').innerHTML = `<div class="text-red-500 text-center"><i class="fa-solid fa-triangle-exclamation text-4xl mb-2"></i><p>Error loading data.json</p><p class="text-sm">${error.message}</p></div>`;
+            }
+        }
+
+        function switchLanguage(lang) {
+            appState.currentLang = lang;
+            appState.currentPage = 1;
+            document.body.className = `theme-${lang} min-h-screen flex flex-col`;
+            document.getElementById('btn-kesiya').className = lang === 'kesiya' ? "px-4 py-1.5 rounded-full text-sm font-semibold bg-[var(--primary)] text-white" : "px-4 py-1.5 rounded-full text-sm font-semibold text-gray-500";
+            document.getElementById('btn-kokoyo').className = lang === 'kokoyo' ? "px-4 py-1.5 rounded-full text-sm font-semibold bg-[var(--primary)] text-white" : "px-4 py-1.5 rounded-full text-sm font-semibold text-gray-500";
+            document.getElementById('page-title').innerText = `${lang.charAt(0).toUpperCase() + lang.slice(1)} Dictionary`;
+            render();
+        }
+
+        function switchTab(tab) {
+            appState.currentTab = tab;
+            document.getElementById('tab-dictionary').className = tab === 'dictionary' ? "px-4 py-2 rounded-md text-sm font-medium bg-[var(--primary)] text-white" : "px-4 py-2 rounded-md text-sm font-medium text-[var(--text)]";
+            document.getElementById('tab-alphabet').className = tab === 'alphabet' ? "px-4 py-2 rounded-md text-sm font-medium bg-[var(--primary)] text-white" : "px-4 py-2 rounded-md text-sm font-medium text-[var(--text)]";
+            document.getElementById('view-dictionary').classList.toggle('hidden', tab !== 'dictionary');
+            document.getElementById('view-alphabet').classList.toggle('hidden', tab !== 'alphabet');
+            render();
+        }
+
+        function render() {
+            if (appState.currentTab === 'dictionary') { renderDictionary(); } else { renderAlphabet(); }
+        }
+
+        function initCategories() {
+            const filter = document.getElementById('category-filter');
+            filter.innerHTML = '<option value="all">All Categories</option>';
+            CATEGORIES.forEach(cat => {
+                filter.innerHTML += `<option value="${cat}">${cat}</option>`;
+            });
+        }
+
+        function renderDictionary() {
+            if (!appState.data) return;
+            const langData = appState.data[appState.currentLang];
+            const grid = document.getElementById('word-grid');
+            const search = document.getElementById('search-input').value.toLowerCase();
+            const catFilter = document.getElementById('category-filter').value;
+            let filtered = langData.words.filter(word => {
+                const matchesSearch = word.meaning.toLowerCase().includes(search) || word.roman.toLowerCase().includes(search) || word.script.toLowerCase().includes(search);
+                const matchesCat = catFilter === 'all' || (word.categories && word.categories.includes(catFilter));
+                return matchesSearch && matchesCat;
+            });
+            const totalPages = Math.ceil(filtered.length / appState.itemsPerPage) || 1;
+            if (appState.currentPage > totalPages) appState.currentPage = 1;
+            const start = (appState.currentPage - 1) * appState.itemsPerPage;
+            const pageData = filtered.slice(start, start + appState.itemsPerPage);
+            grid.innerHTML = pageData.length === 0 ? '<div class="col-span-full text-center py-10 opacity-50">No words found.</div>' : '';
+            pageData.forEach(word => {
+                const card = document.createElement('div');
+                card.className = "bg-[var(--card-bg)] rounded-xl p-6 shadow-sm border border-[var(--primary)]/10 relative group";
+                const tags = (word.categories || []).map(c => `<span class="text-xs px-2 py-1 rounded bg-[var(--secondary)]/30">${c}</span>`).join('');
+                const ipa = word.ipa ? `<p class="text-sm font-mono opacity-60 mb-2">/${word.ipa}/</p>` : '';
+                const audio = word.audio ? `<button onclick="new Audio('${word.audio}').play()" class="w-8 h-8 rounded-full bg-[var(--primary)]/20 text-[var(--primary)] flex items-center justify-center hover:bg-[var(--primary)] hover:text-white transition-colors"><i class="fa-solid fa-play"></i></button>` : '';
+                card.innerHTML = `<div class="flex justify-between items-start mb-4"><div class="flex gap-2 flex-wrap">${tags}</div></div><div class="text-center mb-4"><h3 class="text-4xl font-bold text-[var(--accent)] mb-2 custom-font-${appState.currentLang}">${word.script}</h3><p class="text-lg font-mono opacity-70">${word.roman}</p>${ipa}</div><div class="border-t border-[var(--primary)]/10 pt-4 flex justify-between items-center"><span class="font-semibold">${word.meaning}</span>${audio}</div>`;
+                grid.appendChild(card);
+            });
+            document.getElementById('page-indicator').innerText = `Page ${appState.currentPage} of ${totalPages}`;
+            document.getElementById('prev-page').disabled = appState.currentPage === 1;
+            document.getElementById('next-page').disabled = appState.currentPage === totalPages;
+        }
+
+        function changePage(delta) { appState.currentPage += delta; renderDictionary(); }
+
+        function renderAlphabet() {
+            if (!appState.data) return;
+            const tbody = document.getElementById('alphabet-table-body');
+            tbody.innerHTML = '';
+            appState.data[appState.currentLang].alphabet.forEach(char => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-[var(--secondary)]/10";
+                tr.innerHTML = `<td class="p-4 text-2xl custom-font-${appState.currentLang} font-bold text-[var(--accent)]">${char.character}</td><td class="p-4 font-mono">${char.ipa}</td><td class="p-4">${char.soundDesc}</td><td class="p-4">${char.example}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+</html>

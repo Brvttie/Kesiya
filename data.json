@@ -1,0 +1,20 @@
+{
+  "kesiya": {
+    "words": [
+      {
+        "id": 1,
+        "meaning": "Hello",
+        "roman": "kosa",
+        "script": "कोस",
+        "ipa": "ko.sa",
+        "audio": "https://archive.org/download/example/kosa.mp3",
+        "categories": ["Basic Convo", "Social"]
+      }
+    ],
+    "alphabet": []
+  },
+  "kokoyo": {
+    "words": [],
+    "alphabet": []
+  }
+}
